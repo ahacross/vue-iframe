@@ -12,7 +12,10 @@ onMounted(() => {
       acc[key] = value
       return acc
     }, {})
-    window.parent.postMessage({ queryString: JSON.stringify(params) }, document.referrer)
+
+    // document.referrer 이전 페이지... 그래서 여러 페이지 왔다갔다 하는 경우 못 찾음
+    // document.location.ancestorOrigins[0] 이전 페이지 array로 나옴 0번째 최초 도메인
+    window.parent.postMessage({ queryString: JSON.stringify(params) }, document.location.ancestorOrigins[0])
   }
 })
 </script>
